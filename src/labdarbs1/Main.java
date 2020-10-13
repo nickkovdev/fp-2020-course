@@ -3,7 +3,11 @@ package labdarbs1;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Map;
+import java.util.function.BiFunction;
+import java.util.function.IntPredicate;
 import java.util.stream.IntStream;
+import java.util.function.Function;
 
 enum STATE {
     deficient,
@@ -21,10 +25,16 @@ public class Main {
     }
 }
 
+
+
 class PerfectNumber {
     public static STATE detect(Integer number) {
-        Integer sum = IntStream.range(1, number).filter(i -> number % i == 0).sum();
-        if(sum == number) {
+        IntPredicate divisor = i -> number % i == 0;
+        Integer sum = IntStream
+                .range(1, number)
+                .filter(divisor)
+                .sum();
+        if(sum.equals(number)) {
             return STATE.perfect;
         } else if (sum > number) {
             return STATE.abundant;
